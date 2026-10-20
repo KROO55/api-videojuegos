@@ -1,0 +1,126 @@
+{
+  "name": "Videojuegos - API a correo",
+  "nodes": [
+    {
+      "parameters": {},
+      "id": "inicio",
+      "name": "Inicio Clic",
+      "type": "n8n-nodes-base.manualTrigger",
+      "typeVersion": 1,
+      "position": [
+        0,
+        0
+      ]
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "id",
+              "name": "id",
+              "value": 1,
+              "type": "number"
+            },
+            {
+              "id": "url",
+              "name": "api_url",
+              "value": "http://host.docker.internal:3000",
+              "type": "string"
+            },
+            {
+              "id": "email",
+              "name": "correo",
+              "value": "TU_CORREO@example.com",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "config",
+      "name": "Configurar consulta",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        240,
+        0
+      ]
+    },
+    {
+      "parameters": {
+        "url": "={{ $json.api_url + \"/api/videojuegos/\" + $json.id }}",
+        "options": {
+          "timeout": 120000
+        }
+      },
+      "id": "http",
+      "name": "Consultar videojuego",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        480,
+        0
+      ]
+    },
+    {
+      "parameters": {
+        "sendTo": "={{ $(\"Configurar consulta\").item.json.correo }}",
+        "subject": "={{ \"Videojuego consultado: \" + $json.nombre }}",
+        "emailType": "text",
+        "message": "={{ \"ID: \" + $json.id + \"\nNombre: \" + $json.nombre + \"\nAño: \" + $json.anio_lanzamiento + \"\nConsolas: \" + $json.consolas.join(\", \") + \"\nGénero: \" + $json.genero + \"\nDesarrollador: \" + $json.desarrollador }}",
+        "options": {}
+      },
+      "id": "gmail",
+      "name": "Enviar correo con Gmail",
+      "type": "n8n-nodes-base.gmail",
+      "typeVersion": 2.1,
+      "position": [
+        720,
+        0
+      ],
+      "disabled": true
+    }
+  ],
+  "connections": {
+    "Inicio Clic": {
+      "main": [
+        [
+          {
+            "node": "Configurar consulta",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Configurar consulta": {
+      "main": [
+        [
+          {
+            "node": "Consultar videojuego",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Consultar videojuego": {
+      "main": [
+        [
+          {
+            "node": "Enviar correo con Gmail",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "pinData": {},
+  "tags": []
+}
