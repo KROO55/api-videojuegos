@@ -2,6 +2,19 @@
 
 Node.js + Express + PostgreSQL en Docker, preparada para Render y n8n.
 
+## Instalacion realizada
+
+- API local: http://localhost:3000/api/videojuegos/1
+- API publica: https://api-videojuegos-rb6v.onrender.com/api/videojuegos/1
+- Repositorio: https://github.com/KROO55/api-videojuegos
+- Flujo importado: http://localhost:5678/workflow/ZpGUhciG6Pco46Vc
+- Nombre del flujo: Videojuegos - API a correo
+
+Se probaron respuestas 200, 400 y 404, salud de PostgreSQL, persistencia tras reinicio y consultas desde el contenedor n8n.
+El workflow importado ya utiliza la URL publica de Render. Gmail sigue desactivado y el destinatario es un marcador: selecciona tu credencial y correo antes de activarlo.
+Git pudo publicar mediante el administrador de credenciales existente; Render uso la conexion GitHub existente. No se exportaron tokens ni claves.
+La base gratuita de Render caduca a los 30 dias y el servicio puede suspenderse tras 15 minutos inactivo: https://render.com/docs/free
+
 ## Ejecutar localmente (PowerShell)
 
 Requisitos: Node.js 22 o posterior, Docker Desktop y Git.

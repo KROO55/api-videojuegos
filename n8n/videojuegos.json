@@ -25,7 +25,7 @@
             {
               "id": "url",
               "name": "api_url",
-              "value": "http://host.docker.internal:3000",
+              "value": "https://api-videojuegos-rb6v.onrender.com",
               "type": "string"
             },
             {
@@ -122,5 +122,6 @@
     "executionOrder": "v1"
   },
   "pinData": {},
-  "tags": []
+  "tags": [],
+  "id": "ZpGUhciG6Pco46Vc"
 }
