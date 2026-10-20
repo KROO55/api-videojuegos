@@ -12,7 +12,19 @@ test('API con PostgreSQL real', async () => {
       const res = await fetch(base + path); assert.equal(res.status, status, path);
       const data = await res.json();
       if (path === '/api/videojuegos/1') { assert.equal(data.nombre, 'Super Mario Bros.'); assert.deepEqual(data.consolas,['NES']); }
-      if (path === '/api/videojuegos') assert.equal(data.length,10);
+      if (path === '/api/videojuegos') {
+        assert.equal(data.length,100);
+        assert.deepEqual(data.map(juego => juego.id), Array.from({length:100}, (_, i) => i + 1));
+        assert.equal(new Set(data.map(juego => juego.nombre)).size, 100);
+      }
+    }
+    for (const id of [11, 50, 100]) {
+      const res = await fetch(`${base}/api/videojuegos/${id}`);
+      assert.equal(res.status, 200);
+      const juego = await res.json();
+      assert.equal(juego.id, id);
+      assert.ok(juego.nombre && juego.consolas.length && juego.genero && juego.desarrollador);
+      if (id === 100) assert.equal(juego.nombre, 'Cuphead');
     }
   } finally { await new Promise(resolve => server.close(resolve)); await pool.end(); }
 });

@@ -39,7 +39,7 @@ docker volume ls
 ```
 
 Rutas GET: `/`, `/health`, `/api/videojuegos`, `/api/videojuegos/:id`.
-Los ID 1 a 10 estan cargados. Un ID invalido devuelve 400; uno inexistente, 404.
+Los ID 1 a 100 estan cargados. Un ID invalido devuelve 400; uno inexistente, 404.
 Es una API publica de solo lectura: n8n no requiere credenciales para consultarla.
 
 ```json
@@ -81,3 +81,5 @@ Ejecuta el flujo manualmente; el nodo HTTP devuelve el objeto JSON y Gmail utili
 
 Para reproducir tu practica de Sheets, puedes sustituir Configurar consulta por Google Sheets con una columna `id` y construir la URL en el nodo HTTP. El flujo entregado no modifica hojas existentes.
 Documentacion: https://docs.n8n.io/integrations/builtin/core-nodes/n8n-nodes-base.httprequest/
+
+
